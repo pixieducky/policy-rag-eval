@@ -1,0 +1,58 @@
+# --- Secrets ---
+.env
+.env.*
+!.env.example
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Vector DB / embeddings (local stores) ---
+faiss_db/
+chroma/
+chroma_db/
+vector_store/
+*.faiss
+*.index
+*.ivf
+*.hnsw
+*.sqlite3
+*.db
+
+# --- Documents & data (source PDFs, uploads) ---
+data/
+uploads/
+documents/
+*.pdf
+*.docx
+*.pptx
+*.csv
+*.parquet
+
+# --- Model weights (if you cache locally) ---
+*.pt
+*.pth
+*.safetensors
+*.onnx
+*.h5
+*.bin
+models/
+.cache/huggingface/
+
+# --- Logs & runtime ---
+*.log
+logs/
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db   

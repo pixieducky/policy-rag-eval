@@ -56,3 +56,6 @@ logs/
 .idea/
 .DS_Store
 Thumbs.db   
+
+# --- Eval ---
+.deepeval/

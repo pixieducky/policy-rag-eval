@@ -13,7 +13,12 @@ It answers from retrieved chunks. If the documents do not cover the question, th
 Human review is the result. DeepEval on `llama3.2:3b` is not the quality gate.
 
 ## Demo
+### Policy answer
+
 ![Policy answer](docs/chat-policy.png)
+
+### I don't know 
+
 ![I don't know, no sources](docs/chat-idk.gif)
 
 ## Stack

@@ -2,11 +2,10 @@ from fastapi import FastAPI, UploadFile, File
 from rag import get_retriever, load_and_split_documents, add_documents_to_store
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
+from langsmith import traceable
 import os
 import shutil
 import ollama
-
-from rag import get_retriever
 
 # Load environment variables
 load_dotenv()
@@ -46,7 +45,7 @@ class ChatResponse(BaseModel):
 retriever = get_retriever(k=3)
 
 # -------------------- Endpoints -----------------
-
+@traceable(name="policy_chat")
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     docs = retriever.invoke(request.question)
@@ -73,16 +72,16 @@ Context: {context}
 Question: {request.question}
 
 Answer:"""
-
+    model_name = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
     try:
         response = ollama.chat(
-            model="llama3.2:3b",
+            model=model_name,
             messages=[{"role": "user", "content": prompt_text}],
         )
         answer = response["message"]["content"]
         model_name = "llama3.2:3b (Ollama) + RAG"
     except Exception as e:
-        answer = f"Ollam failed ({e}). Retrieved context:\n\n{context}"
+        answer = f"Ollama failed ({e}). Retrieved context:\n\n{context}"
         model_name = "retrieval-only fallback"
 
     if should_hide_sources(answer):

@@ -15,8 +15,13 @@ def ask(inputs):
         json={"question": inputs["question"]},
         timeout=180
     )
-    r.raise_for_status()
-    return{"answer": r.json()["answer"]}
+    data = r.json()
+    return{
+        "answer": data["answer"],
+        "prompt_tokens": data.get("prompt_tokens", 0),
+        "completion_tokens": data.get("completion_tokens", 0),
+        "total_tokens": data.get("total_tokens", 0)
+    }
 
 if __name__ == "__main__":
     results = evaluate(

@@ -15,11 +15,12 @@ def ask(inputs):
         json={"question": inputs["question"]},
         timeout=180
     )
+    r.raise_for_status()
     data = r.json()
     return{
         "answer": data["answer"],
-        "prompt_tokens": data.get("prompt_tokens", 0),
-        "completion_tokens": data.get("completion_tokens", 0),
+        "input_tokens": data.get("prompt_tokens", 0),
+        "output_tokens": data.get("completion_tokens", 0),
         "total_tokens": data.get("total_tokens", 0)
     }
 
@@ -27,7 +28,7 @@ if __name__ == "__main__":
     results = evaluate(
         ask,
         data="policy-questions",
-        experiment_prefix="llama-refuse-test", # Change name for Qwen
+        experiment_prefix="claude-haiku", # Change name for other models
         client=client  # use the same client that can read the dataset
     )
     print(results)
